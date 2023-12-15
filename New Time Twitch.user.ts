@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New Time Twitch
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      2.0
 // @description  ###
 // @author       UserRoot-Luca
 // @match        https://www.twitch.tv/*
@@ -12,11 +12,14 @@
 
 
 (function() {
-    const TimeFormats = (seconds:number, speed:number):string => {
-        let s:number = 0;
+    const TimeMultiplier = (seconds:number, speed:number):number => {
         if(speed >= 1) {
-            s = seconds / speed;
+            return seconds / speed;
         }
+        return seconds
+    }
+    const TimeFormats = (seconds:number, speed:number):string => {
+        let s:number = TimeMultiplier(seconds, speed);
         let m:number = Math.floor((s % 3600) / 60);
         let h:number = Math.floor(s / 3600);
 
@@ -30,8 +33,9 @@
                 let duration = video.duration;
                 let currentSeconds = video.currentTime;
                 let remainingTime = duration - currentSeconds;
+                let endOra = new Date(new Date().getTime() + (TimeMultiplier(remainingTime, playbackSpeed) * 1000));
 
-                document.querySelector<HTMLParagraphElement>("[data-a-target='player-seekbar-duration']")!.innerText = `-${TimeFormats(remainingTime, playbackSpeed)} / ${TimeFormats(duration, 1)}`;
+                document.querySelector<HTMLParagraphElement>("[data-a-target='player-seekbar-duration']")!.innerText = `${TimeFormats(duration, 1)} ( -${TimeFormats(remainingTime, playbackSpeed)} / ${endOra.getHours().toString().padStart(2, '0')}:${endOra.getMinutes().toString().padStart(2, '0')} )`;
             }
         });
     }
