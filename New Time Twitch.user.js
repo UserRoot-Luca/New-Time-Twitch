@@ -41,8 +41,15 @@
         if (timeOut == 600) {
             clearInterval(AddScript);
         }
-        if (document.querySelector("[data-a-target='player-seekbar-duration']") != null) {
+        let element = document.querySelector("[data-a-target='player-seekbar-duration']");
+        if (element != null) {
             Script();
+            element.addEventListener('mouseover', () => {
+                element.style.backgroundColor = "#000000";
+            });
+            element.addEventListener('mouseleave', () => {
+                element.style.backgroundColor = "";
+            });
             clearInterval(AddScript);
         }
         timeOut++;
