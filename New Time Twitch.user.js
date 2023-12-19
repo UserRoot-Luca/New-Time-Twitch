@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         New Time Twitch
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  ###
 // @author       UserRoot-Luca
 // @match        https://www.twitch.tv/*
