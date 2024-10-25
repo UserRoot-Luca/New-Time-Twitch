@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         New Time Twitch
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      3.0
 // @description  ###
 // @author       UserRoot-Luca
 // @match        https://www.twitch.tv/*
@@ -12,10 +12,7 @@
 // ==/UserScript==
 (function () {
     const TimeMultiplier = (seconds, speed) => {
-        if (speed >= 1) {
-            return seconds / speed;
-        }
-        return seconds;
+        return seconds / speed;
     };
     const TimeFormats = (seconds, speed) => {
         let s = TimeMultiplier(seconds, speed);
