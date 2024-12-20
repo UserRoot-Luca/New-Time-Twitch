@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         New Time Twitch
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      4.0
 // @description  ###
 // @author       UserRoot-Luca
 // @match        https://www.twitch.tv/*
@@ -23,7 +23,7 @@
         return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${Math.floor(s % 60).toString().padStart(2, '0')}`;
     };
     const Script = () => {
-        document.querySelector<HTMLParagraphElement>("[data-a-target='player-seekbar-current-time']")!.addEventListener("DOMSubtreeModified", () => {
+        new MutationObserver(() => {
             let video = document.querySelector<HTMLVideoElement>("video");
             if (video != null) {
                 let playbackSpeed = video.playbackRate;
@@ -34,6 +34,9 @@
 
                 document.querySelector<HTMLParagraphElement>("[data-a-target='player-seekbar-duration']")!.innerText = `${TimeFormats(duration, 1)} ( -${TimeFormats(remainingTime, playbackSpeed)} / ${endOra.getHours().toString().padStart(2, '0')}:${endOra.getMinutes().toString().padStart(2, '0')} )`;
             }
+        }).observe(document.querySelector<HTMLParagraphElement>("[data-a-target='player-seekbar-current-time']")!, {
+            childList: true,
+            subtree: true,
         });
     }
     let timeOut = 0;
