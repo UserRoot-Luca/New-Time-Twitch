@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         New Time Twitch
 // @namespace    http://tampermonkey.net/
-// @version      4.0
+// @version      4.1
 // @description  ###
 // @author       UserRoot-Luca
 // @match        https://www.twitch.tv/*
@@ -34,6 +34,7 @@
         }).observe(document.querySelector("[data-a-target='player-seekbar-current-time']"), {
             childList: true,
             subtree: true,
+            characterData: true,
         });
     };
     let timeOut = 0;
